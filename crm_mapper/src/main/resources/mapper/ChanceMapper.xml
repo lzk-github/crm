@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.mapper.ChanceMapper">
+  <resultMap id="BaseResultMap" type="com.kaishengit.entity.Chance">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="chance_name" jdbcType="VARCHAR" property="chanceName" />
+    <result column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="worth" jdbcType="DOUBLE" property="worth" />
+    <result column="curr_progress" jdbcType="VARCHAR" property="currProgress" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="last_contact_time" jdbcType="TIMESTAMP" property="lastContactTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, chance_name, account_id, customer_id, worth, curr_progress, content, last_contact_time
+  </sql>
+  <select id="selectByExample" parameterType="com.kaishengit.entity.ChanceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from chance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kaishengit.entity.ChanceExample">
+    delete from chance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="Chance">
+    insert into chance (id, chance_name, account_id, 
+      customer_id, worth, curr_progress, 
+      content, last_contact_time,create_time)
+    values (#{id,jdbcType=INTEGER}, #{chanceName,jdbcType=VARCHAR}, #{accountId,jdbcType=INTEGER}, 
+      #{customerId,jdbcType=INTEGER}, #{worth,jdbcType=DOUBLE}, #{currProgress,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{lastContactTime,jdbcType=TIMESTAMP},#{createTime})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kaishengit.entity.Chance">
+    insert into chance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="chanceName != null">
+        chance_name,
+      </if>
+      <if test="accountId != null">
+        account_id,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="worth != null">
+        worth,
+      </if>
+      <if test="currProgress != null">
+        curr_progress,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="lastContactTime != null">
+        last_contact_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="chanceName != null">
+        #{chanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="worth != null">
+        #{worth,jdbcType=DOUBLE},
+      </if>
+      <if test="currProgress != null">
+        #{currProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="lastContactTime != null">
+        #{lastContactTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kaishengit.entity.ChanceExample" resultType="java.lang.Long">
+    select count(*) from chance
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <!--根据accountId查找对应的销售机会列表-->
+    <select id="selectByAccountId" resultMap="myResultMap">
+        select
+        chance.*,
+        customer.id as id2,
+        customer.account_id as account_id2,
+        customer.cust_name,
+        customer.job_title,
+        customer.mobile,
+        customer.address,
+        customer.trade,
+        customer.source,
+        customer.`level`,
+        customer.mark,
+        customer.last_contact_time as last_contact_time2,
+        customer.create_time AS cust_create_time,
+        customer.update_time,
+        customer.remainder,
+        customer.sex
+
+        from chance,customer
+        WHERE chance.customer_id=customer.id and
+              chance.account_id = #{accountId}
+
+        order by id desc
+    </select>
+    <select id="selectByPrimaryKey" resultMap="myResultMap">
+        select
+        chance.*,
+        customer.id as id2,
+        customer.account_id as account_id2,
+        customer.cust_name,
+        customer.job_title,
+        customer.mobile,
+        customer.address,
+        customer.trade,
+        customer.source,
+        customer.`level`,
+        customer.mark,
+        customer.last_contact_time as last_contact_time2,
+        customer.create_time AS cust_create_time,
+        customer.update_time,
+        customer.remainder,
+        customer.sex
+
+        from chance,customer
+        WHERE chance.customer_id=customer.id and
+              chance.id = #{id}
+    </select>
+
+    <!--根据customerid查找chance列表-->
+    <select id="selectByCustomerId" resultType="com.kaishengit.entity.Chance">
+        select * from chance where customer_id=#{id}
+    </select>
+
+    <!--resultMap-->
+    <resultMap id="myResultMap" type="Chance">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="chance_name" jdbcType="VARCHAR" property="chanceName"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="worth" jdbcType="DOUBLE" property="worth"/>
+        <result column="curr_progress" jdbcType="VARCHAR" property="currProgress"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_contact_time" jdbcType="TIMESTAMP" property="lastContactTime"/>
+        <result column="account_id" jdbcType="INTEGER" property="accountId"/>
+        <association property="customer" javaType="Customer">
+            <id column="id2" jdbcType="INTEGER" property="id"/>
+            <result column="cust_name" jdbcType="VARCHAR" property="custName"/>
+            <result column="job_title" jdbcType="VARCHAR" property="jobTitle"/>
+            <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+            <result column="address" jdbcType="VARCHAR" property="address"/>
+            <result column="trade" jdbcType="VARCHAR" property="trade"/>
+            <result column="source" jdbcType="VARCHAR" property="source"/>
+            <result column="level" jdbcType="VARCHAR" property="level"/>
+            <result column="mark" jdbcType="VARCHAR" property="mark"/>
+            <result column="account_id2" jdbcType="INTEGER" property="accountId"/>
+            <result column="last_contact_time2" jdbcType="TIMESTAMP" property="lastContactTime"/>
+            <result column="create_time2" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+            <result column="remainder" jdbcType="VARCHAR" property="remainder"/>
+            <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        </association>
+    </resultMap>
+
+
+
+
+    <update id="updateByExampleSelective" parameterType="map">
+    update chance
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.chanceName != null">
+        chance_name = #{record.chanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null">
+        account_id = #{record.accountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerId != null">
+        customer_id = #{record.customerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.worth != null">
+        worth = #{record.worth,jdbcType=DOUBLE},
+      </if>
+      <if test="record.currProgress != null">
+        curr_progress = #{record.currProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastContactTime != null">
+        last_contact_time = #{record.lastContactTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chance
+    set id = #{record.id,jdbcType=INTEGER},
+      chance_name = #{record.chanceName,jdbcType=VARCHAR},
+      account_id = #{record.accountId,jdbcType=INTEGER},
+      customer_id = #{record.customerId,jdbcType=INTEGER},
+      worth = #{record.worth,jdbcType=DOUBLE},
+      curr_progress = #{record.currProgress,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      last_contact_time = #{record.lastContactTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.entity.Chance">
+    update chance
+    <set>
+      <if test="chanceName != null">
+        chance_name = #{chanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="worth != null">
+        worth = #{worth,jdbcType=DOUBLE},
+      </if>
+      <if test="currProgress != null">
+        curr_progress = #{currProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="lastContactTime != null">
+        last_contact_time = #{lastContactTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kaishengit.entity.Chance">
+    update chance
+    set chance_name = #{chanceName,jdbcType=VARCHAR},
+      account_id = #{accountId,jdbcType=INTEGER},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      worth = #{worth,jdbcType=DOUBLE},
+      curr_progress = #{currProgress,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      last_contact_time = #{lastContactTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

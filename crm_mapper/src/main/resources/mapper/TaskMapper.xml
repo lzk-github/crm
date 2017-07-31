@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishengit.mapper.TaskMapper">
+    <resultMap id="BaseResultMap" type="com.kaishengit.entity.Task">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="account_id" jdbcType="INTEGER" property="accountId"/>
+        <result column="chance_id" jdbcType="INTEGER" property="chanceId"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="task_name" jdbcType="VARCHAR" property="taskName"/>
+        <result column="end_time" jdbcType="VARCHAR" property="endTime"/>
+        <result column="remind_time" jdbcType="VARCHAR" property="remindTime"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, account_id, chance_id, customer_id, task_name, end_time, remind_time, state, 
+    create_time
+  </sql>
+    <select id="selectByExample" parameterType="com.kaishengit.entity.TaskExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.kaishengit.entity.TaskExample">
+        delete from task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.kaishengit.entity.Task" useGeneratedKeys="true" keyProperty="id">
+    insert into task (id, account_id, chance_id, 
+      customer_id, task_name, end_time, 
+      remind_time, state, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{accountId,jdbcType=INTEGER}, #{chanceId,jdbcType=INTEGER}, 
+      #{customerId,jdbcType=INTEGER}, #{taskName,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR},
+      #{remindTime,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createTime,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.kaishengit.entity.Task">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="chanceId != null">
+                chance_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="taskName != null">
+                task_name,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="remindTime != null">
+                remind_time,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="chanceId != null">
+                #{chanceId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="taskName != null">
+                #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="remindTime != null">
+                #{remindTime,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.kaishengit.entity.TaskExample" resultType="java.lang.Long">
+        select count(*) from task
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <!--根据员工account, id查找任务列表-->
+    <select id="findByAccountId" resultType="com.kaishengit.entity.Task">
+        SELECT
+        task.*, chance.chance_name,
+        customer.cust_name
+        FROM
+            task
+        LEFT JOIN chance ON task.chance_id =chance.id
+        LEFT JOIN customer ON task.customer_id= customer.id
+        WHERE
+            task.account_id = #{id}
+        ORDER BY
+        task.state desc,
+        task.id DESC
+    </select>
+
+    <!--根据员工id和客户id查找对应任务列表-->
+    <select id="selectByAccountIdAndCustomerId" resultType="com.kaishengit.entity.Task">
+        select task.*,chance.chance_name,customer.cust_name
+        from customer left join task on task.customer_id=customer.id
+        left join chance on chance.id=task.chance_id
+        where task.account_id=#{accountId} and task.customer_id=#{customerId}
+        order by task.state desc,task.id desc
+    </select>
+
+    <!--根据员工id和销售机会id查找任务列表-->
+    <select id="selectByAccountIdAndChanceId" resultType="com.kaishengit.entity.Task">
+        select task.*,chance.chance_name,customer.cust_name
+        from customer right join task on task.customer_id=customer.id
+        right join chance on chance.id=task.chance_id
+        where task.account_id=#{accountId} and task.chance_id=#{chanceId}
+        order by task.state desc,task.id desc
+    </select>
+
+    <!--根据任务Id查找对应Task对象-->
+    <select id="selectByTaskId" resultType="com.kaishengit.entity.Task">
+        select task.*,chance.chance_name,customer.cust_name
+        from task left join customer on task.customer_id=customer.id
+        left join chance on chance.id=task.chance_id
+        where task.id=#{taskId}
+
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map">
+        update task
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.accountId != null">
+                account_id = #{record.accountId,jdbcType=INTEGER},
+            </if>
+            <if test="record.chanceId != null">
+                chance_id = #{record.chanceId,jdbcType=INTEGER},
+            </if>
+            <if test="record.customerId != null">
+                customer_id = #{record.customerId,jdbcType=INTEGER},
+            </if>
+            <if test="record.taskName != null">
+                task_name = #{record.taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.endTime != null">
+                end_time = #{record.endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remindTime != null">
+                remind_time = #{record.remindTime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.state != null">
+                state = #{record.state,jdbcType=TINYINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update task
+        set id = #{record.id,jdbcType=INTEGER},
+        account_id = #{record.accountId,jdbcType=INTEGER},
+        chance_id = #{record.chanceId,jdbcType=INTEGER},
+        customer_id = #{record.customerId,jdbcType=INTEGER},
+        task_name = #{record.taskName,jdbcType=VARCHAR},
+        end_time = #{record.endTime,jdbcType=VARCHAR},
+        remind_time = #{record.remindTime,jdbcType=VARCHAR},
+        state = #{record.state,jdbcType=TINYINT},
+        create_time = #{record.createTime,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kaishengit.entity.Task">
+        update task
+        <set>
+            <if test="accountId != null">
+                account_id = #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="chanceId != null">
+                chance_id = #{chanceId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="taskName != null">
+                task_name = #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="remindTime != null">
+                remind_time = #{remindTime,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kaishengit.entity.Task">
+    update task
+    set account_id = #{accountId,jdbcType=INTEGER},
+      chance_id = #{chanceId,jdbcType=INTEGER},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      remind_time = #{remindTime,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
